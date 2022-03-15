@@ -28,32 +28,7 @@ class HomeStart extends State<Home> {
         appBar: AppBar(
           title: Text('Home App línea 2'),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: Center(
-                  child: Container(
-                    width: 150,
-                    height: 150,
-                    child: Image.asset('image/User.png'),
 
-                  ),
-                ),
-              ),
-              Padding(padding: EdgeInsets.all(10),
-                child: ElevatedButton(
-                  style:ElevatedButton.styleFrom(minimumSize: Size(500,50)),
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (_)=>Login()));
-                  },
-                  child: Text('Ingresar'),
-                 )
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

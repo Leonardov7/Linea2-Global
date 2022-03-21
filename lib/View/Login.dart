@@ -35,6 +35,7 @@ class LoginApp extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Login'),
+        backgroundColor: Colors.black45,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -84,7 +85,7 @@ class LoginApp extends State<Login> {
                   pass.clear();
                   //mensaje('Este es un título', 'Este es un mensaje');
                 },
-                child: Text('Ingresar'),
+                child: Text('Ingresar',style: TextStyle(color: Colors.white,fontSize: 20)),
               ),
             ),
           ],

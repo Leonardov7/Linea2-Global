@@ -47,6 +47,10 @@ class HomeStart extends State<Home> {
               ListTile(
                 title: Text('Ingresar'),
                 leading: Icon(Icons.login),
+                onLongPress: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => Login()));
+                },
               ),
               ListTile(
                 title: Text('Nuevo usuario'),

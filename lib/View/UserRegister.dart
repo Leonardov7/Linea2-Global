@@ -15,7 +15,10 @@ class UserRegisterApp extends State<UserRegister> {
     var selectedDate = await getDatePickerWidget();
     setState(() {
       _currentSelectedDate = selectedDate;
-      fecha.text=selectedDate.toString();
+      if (selectedDate != null) {
+        fecha.text = selectedDate.toString().substring(0, 10);
+        //fecha.text='1940-01-01';
+      }
     });
   }
 
@@ -26,7 +29,7 @@ class UserRegisterApp extends State<UserRegister> {
         firstDate: DateTime(1930),
         lastDate: DateTime.now(),
         fieldHintText: "DIA/MES/AÑO",
-        fieldLabelText: "FECHA DE NACIMIENTO",
+        fieldLabelText: "Día/Mes/Año",
         helpText: "FECHA DE NACIMIENTO",
         errorFormatText: "Ingrese una fecha válida",
         errorInvalidText: "Fecha fuera de rango",
@@ -54,7 +57,7 @@ class UserRegisterApp extends State<UserRegister> {
               child: Image.asset('image/img.png'),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 15,top: 10,right: 15),
+              padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
@@ -68,7 +71,7 @@ class UserRegisterApp extends State<UserRegister> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 15,top: 10,right: 15),
+              padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
@@ -82,7 +85,7 @@ class UserRegisterApp extends State<UserRegister> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 15,top: 10,right: 15),
+              padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
@@ -96,7 +99,7 @@ class UserRegisterApp extends State<UserRegister> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 15,top: 10,right: 15),
+              padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
@@ -109,7 +112,7 @@ class UserRegisterApp extends State<UserRegister> {
                 ),
               ),
             ),
-          /*  Focus(
+            /*  Focus(
                 child: TextField(
                   controller: fecha,
                   style: TextStyle(color: Colors.blueGrey),
@@ -134,10 +137,9 @@ class UserRegisterApp extends State<UserRegister> {
                   }
                   ;
                 }),
-
            */
             Padding(
-                padding: EdgeInsets.only(left: 15,top: 10,right: 15),
+                padding: EdgeInsets.only(left: 15, top: 10, right: 15),
                 child: Stack(
                     alignment: const Alignment(1.0, 1.0),
                     children: <Widget>[
@@ -149,39 +151,18 @@ class UserRegisterApp extends State<UserRegister> {
                           fillColor: Colors.green,
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
-                          labelText: 'Fecha',
+                          labelText: 'Fecha de nacimiento',
                           hintText: 'Digite la fecha de nacimiento',
                         ),
                       ),
                       new FlatButton(
                           onPressed: () {
                             callDataPcker();
-
                           },
                           child: new Icon(Icons.date_range))
                     ])),
             Padding(
-              padding: EdgeInsets.only(left: 15,top: 10,right: 15),
-              child: TextField(
-                //onFocusChange: (hasFocus) {
-                //print('2:  $hasFocus');
-                //},
-                // onChanged: (Text) {
-                // callDataPcker();
-                //},
-                //controller: user,
-                style: TextStyle(color: Colors.blueGrey),
-                decoration: InputDecoration(
-                  fillColor: Colors.green,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  labelText: 'Fecha de nacimiento',
-                  hintText: 'Digite su nombre',
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 15,top: 10,right: 15),
+              padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
@@ -195,7 +176,7 @@ class UserRegisterApp extends State<UserRegister> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 15,top: 10,right: 15),
+              padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
@@ -208,14 +189,13 @@ class UserRegisterApp extends State<UserRegister> {
                 ),
               ),
             ),
-            Padding(padding: EdgeInsets.only(left: 15,top: 10,right: 15),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(minimumSize: Size(400, 50)),
-              onPressed: (){
-
-              },
-              child: Text('Enviar'),
-            ),
+            Padding(
+              padding: EdgeInsets.only(left: 15, top: 10, right: 15),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(minimumSize: Size(400, 50)),
+                onPressed: () {},
+                child: Text('Enviar'),
+              ),
             )
           ],
         ),

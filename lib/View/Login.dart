@@ -1,44 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Login extends StatefulWidget{//cambia dinámicamente
+class Login extends StatefulWidget {
+  //cambia dinámicamente
   @override
-  LoginApp createState()=> LoginApp();
+  LoginApp createState() => LoginApp();
 }
 
 class LoginApp extends State<Login> {
-  TextEditingController user=TextEditingController();
-  TextEditingController pass=TextEditingController();
-  DateTime selectedDate = DateTime.now();
-  var _currentSelectedDate;
+  TextEditingController user = TextEditingController();
+  TextEditingController pass = TextEditingController();
 
-
-  validarDatos()async{
-    try{
-      CollectionReference ref =FirebaseFirestore.instance.collection("User");
-      QuerySnapshot usuario=await ref.get();
-
-      if (usuario.docs.length !=0){
-
-        for(var cursor in usuario.docs){
-          if (user.text==cursor.get('User')){
-            if (pass.text==cursor.get('Pass')){
+  validarDatos() async {
+    try {
+      CollectionReference ref = FirebaseFirestore.instance.collection("User");
+      QuerySnapshot usuario = await ref.get();
+      if (usuario.docs.length != 0) {
+        for (var cursor in usuario.docs) {
+          if (user.text == cursor.get('User')) {
+            if (pass.text == cursor.get('Pass')) {
               mensaje('Mensaje', 'dato encontrado');
             }
           }
           //print(cursor.get('User'));
         }
       }
-    }catch(e){
+    } catch (e) {
       mensaje('Error', e.toString());
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Login'),
-
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -75,16 +71,15 @@ class LoginApp extends State<Login> {
                       borderRadius: BorderRadius.circular(10)),
                   labelText: 'Pass',
                   hintText: 'Digite la contraseña',
-
                 ),
               ),
             ),
-            Padding(padding: EdgeInsets.all(10),
+            Padding(
+              padding: EdgeInsets.all(10),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(minimumSize: Size(500,50)),
-
-                onPressed: (){
-                   validarDatos();
+                style: ElevatedButton.styleFrom(minimumSize: Size(500, 50)),
+                onPressed: () {
+                  validarDatos();
 
                   pass.clear();
                   //mensaje('Este es un título', 'Este es un mensaje');
@@ -92,9 +87,7 @@ class LoginApp extends State<Login> {
                 child: Text('Ingresar'),
               ),
             ),
-            Text("$_currentSelectedDate")
           ],
-
         ),
       ),
     );
@@ -113,7 +106,7 @@ class LoginApp extends State<Login> {
                   Navigator.of(context).pop();
                 },
                 child:
-                Text("Aceptar", style: TextStyle(color: Colors.blueGrey)),
+                    Text("Aceptar", style: TextStyle(color: Colors.blueGrey)),
               )
             ],
           );

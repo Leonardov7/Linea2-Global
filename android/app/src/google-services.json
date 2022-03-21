@@ -7,7 +7,36 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:805523994840:android:3f938f00345eac0493bfad",
+        "mobilesdk_app_id": "1:805523994840:android:8fd20e6f141e0e2693bfad",
+        "android_client_info": {
+          "package_name": "co.edu.ucundinamarca.proyectolinea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "805523994840-b3hheneoo19pbkl7mok1nj5hqdmg80af.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRjkcGJBMeLWk5UHWlQo4ln87wD7TAqn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "805523994840-b3hheneoo19pbkl7mok1nj5hqdmg80af.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805523994840:android:fc1a992f2bab47e493bfad",
         "android_client_info": {
           "package_name": "co.edu.ucundinamarca.proyectolinea2"
         }

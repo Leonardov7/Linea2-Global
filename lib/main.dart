@@ -28,8 +28,41 @@ class HomeStart extends State<Home> {
       home: Scaffold(
         appBar: AppBar(
           title: Text('Home App línea 2'),
-        ),
-        body: SingleChildScrollView(
+          backgroundColor: Colors.black45,
+        ),drawer: Drawer(
+          child: new ListView(
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                accountName: Text("Guillermo García"),
+                accountEmail: Text("email@prueba.es"),
+                currentAccountPicture: CircleAvatar(child: Image.asset('image/User.png')),
+                decoration: BoxDecoration(
+                  color: Colors.black45,
+                ),
+              ),
+              ListTile(
+                title: Text('Home'),
+                leading: Icon(Icons.home),
+              ),
+              ListTile(
+                title: Text('Ingresar'),
+                leading: Icon(Icons.login),
+              ),
+              ListTile(
+                title: Text('Nuevo usuario'),
+                leading: Icon(Icons.group_add),
+                onLongPress: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => UserRegister()));
+                },
+              ),
+
+            ],
+          )
+      ),
+        body:
+
+        SingleChildScrollView(
           child: Column(
             children: [
               Padding(
@@ -46,26 +79,32 @@ class HomeStart extends State<Home> {
                 padding:
                     EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 0),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(minimumSize: Size(400, 50)),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black45,
+                      minimumSize: Size(400, 50)),
+
                   onPressed: () {
                     print('Ingreso Login');
                     Navigator.push(
                         context, MaterialPageRoute(builder: (_) => Login()));
                   },
-                  child: Text('Ingresar'),
+                  child: Text('Ingresar',style: TextStyle(color: Colors.white,fontSize: 20),),
                 ),
               ),
               Padding(
                 padding:
                     EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 0),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(minimumSize: Size(400, 50)),
+
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black45,
+                      minimumSize: Size(400, 50)),
                   onPressed: () {
                     print('Registrar Usuario');
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) => UserRegister()));
                   },
-                  child: Text('Registrar Usuario'),
+                  child: Text('Registrar Usuario',style: TextStyle(color: Colors.white,fontSize: 20)),
                 ),
               ),
             ],

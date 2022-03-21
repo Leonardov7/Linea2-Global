@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+//import 'package:flutter_localizations/flutter_localizations.dart';
 
 class UserRegister extends StatefulWidget {
   @override
@@ -8,7 +9,10 @@ class UserRegister extends StatefulWidget {
 
 class UserRegisterApp extends State<UserRegister> {
   DateTime selectedDate = DateTime.now();
+  var passHide=true;
+  var ojo=Icons.visibility;
   TextEditingController fecha = TextEditingController();
+  TextEditingController pass= TextEditingController();
   var _currentSelectedDate;
 
   void callDataPcker() async {
@@ -35,7 +39,7 @@ class UserRegisterApp extends State<UserRegister> {
         errorInvalidText: "Fecha fuera de rango",
         initialEntryMode: DatePickerEntryMode.input,
         builder: (context, child) {
-          return Theme(data: ThemeData.fallback(), child: Center(child: child));
+          return Theme(data: ThemeData.dark(), child: Center(child: child));
         });
   }
 
@@ -45,6 +49,7 @@ class UserRegisterApp extends State<UserRegister> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black45,
         title: Text('Registro de usuario'),
       ),
       body: SingleChildScrollView(
@@ -59,6 +64,7 @@ class UserRegisterApp extends State<UserRegister> {
             Padding(
               padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
+                autofocus: true,
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
                 decoration: InputDecoration(
@@ -87,6 +93,7 @@ class UserRegisterApp extends State<UserRegister> {
             Padding(
               padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
+                keyboardType: TextInputType.emailAddress,
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
                 decoration: InputDecoration(
@@ -101,6 +108,7 @@ class UserRegisterApp extends State<UserRegister> {
             Padding(
               padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
+                keyboardType: TextInputType.number,
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
                 decoration: InputDecoration(
@@ -163,36 +171,46 @@ class UserRegisterApp extends State<UserRegister> {
                     ])),
             Padding(
               padding: EdgeInsets.only(left: 15, top: 10, right: 15),
-              child: TextField(
-                //controller: user,
-                style: TextStyle(color: Colors.blueGrey),
-                decoration: InputDecoration(
-                  fillColor: Colors.green,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  labelText: 'Contraseña',
-                  hintText: 'Digite su contraseña',
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 15, top: 10, right: 15),
-              child: TextField(
-                //controller: user,
-                style: TextStyle(color: Colors.blueGrey),
-                decoration: InputDecoration(
-                  fillColor: Colors.green,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  labelText: 'Confirmación de contraseña',
-                  hintText: 'Confirme la contraseña',
-                ),
+              child: Stack(
+                alignment: const Alignment(1.0, 1.0),
+                children: [
+                  TextField(
+                    keyboardType: TextInputType.multiline,
+                    obscureText: passHide,
+                    //controller: user,
+                    style: TextStyle(color: Colors.blueGrey),
+                    decoration: InputDecoration(
+                      fillColor: Colors.green,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      labelText: 'Contraseña',
+                      hintText: 'Digite su contraseña',
+                    ),
+                  ),
+                  new FlatButton(
+
+                      onPressed: (){setState(() {
+                        if (passHide){
+                          passHide=false;
+                          ojo=Icons.visibility_off;
+                        }
+                      else{
+                        passHide=true;
+                        ojo=Icons.visibility;
+                        }
+                      }); }
+                      , child: new Icon(ojo))
+                ],
               ),
             ),
             Padding(
               padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(minimumSize: Size(400, 50)),
+
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black45,
+                  minimumSize: Size(400, 50)
+                ),
                 onPressed: () {},
                 child: Text('Enviar'),
               ),

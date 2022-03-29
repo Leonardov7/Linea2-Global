@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:local_auth/auth_strings.dart';
+import 'package:local_auth/local_auth.dart';
 
 class Login extends StatefulWidget {
   //cambia dinámicamente
@@ -10,7 +14,7 @@ class Login extends StatefulWidget {
 class LoginApp extends State<Login> {
   TextEditingController user = TextEditingController();
   TextEditingController pass = TextEditingController();
-
+  final LocalAuthentication auth = LocalAuthentication();
 
   validarDatos() async {
     try {
@@ -33,6 +37,9 @@ class LoginApp extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      biometrico();
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text('Login'),
@@ -93,6 +100,23 @@ class LoginApp extends State<Login> {
                     style: TextStyle(color: Colors.white, fontSize: 20)),
               ),
             ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(50, 50),
+                  primary: Colors.black45,
+                ),
+                onPressed: () {
+
+                    print("dentro");
+                    biometrico();
+
+
+                },
+                child: Icon(Icons.fingerprint, size: 80),
+              ),
+            ),
           ],
         ),
       ),
@@ -117,5 +141,39 @@ class LoginApp extends State<Login> {
             ],
           );
         });
+  }
+
+  Future<void> biometrico() async {
+    print("biométrico");
+    bool flag = true;
+    if (flag) {
+      bool authenticated = false;
+      const androidString = const AndroidAuthMessages(
+        cancelButton: "Cancelar",
+        goToSettingsButton: "Ajustes",
+        signInTitle: "Ingrese",
+        goToSettingsDescription: "Confirme su huella",
+        biometricHint: "Toque el sensor",
+        biometricNotRecognized: "Huella no reconocida",
+        biometricRequiredTitle: "Required Title",
+        biometricSuccess: "Huella reconocida",
+
+      );
+      try {
+        authenticated = await auth.authenticateWithBiometrics  (
+            localizedReason: "Autentíquese para acceder",
+            useErrorDialogs: true,
+            stickyAuth: true,
+            androidAuthStrings: androidString);
+        if (!authenticated) {
+          exit(0);
+        }
+      } catch (e) {
+        print(e);
+      }
+      if (!mounted) {
+        return;
+      }
+    }
   }
 }

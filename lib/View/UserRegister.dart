@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,7 +14,31 @@ class UserRegisterApp extends State<UserRegister> {
   var ojo=Icons.visibility;
   TextEditingController fecha = TextEditingController();
   TextEditingController pass= TextEditingController();
+  TextEditingController nombreUser= TextEditingController();
+  TextEditingController identity=TextEditingController();
+  TextEditingController correo=TextEditingController();
+  TextEditingController tele=TextEditingController();
   var _currentSelectedDate;
+  final firebase=FirebaseFirestore.instance;
+  inserDatatUser() async{
+    try{
+      await firebase
+          .collection("User")
+          .doc()
+          .set({
+        "NombreUsuario":nombreUser.text,
+        "Identificación":identity.text,
+        "Correo":correo.text,
+        "Telefono":tele.text,
+        "FechaNacido":fecha.text,
+        "Password":pass.text,
+        "Estado":true
+      });
+    }
+    catch (e){
+      print(e);
+    }
+  }
 
   void callDataPcker() async {
     var selectedDate = await getDatePickerWidget();
@@ -23,7 +48,8 @@ class UserRegisterApp extends State<UserRegister> {
         fecha.text = selectedDate.toString().substring(0, 10);
         //fecha.text='1940-01-01';
       }
-    });
+    }
+    );
   }
 
   Future<DateTime?> getDatePickerWidget() {
@@ -211,7 +237,9 @@ class UserRegisterApp extends State<UserRegister> {
                   primary: Colors.black45,
                   minimumSize: Size(400, 50)
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  inserDatatUser();
+                },
                 child: Text('Enviar'),
               ),
             )

@@ -11,6 +11,7 @@ class LoginApp extends State<Login> {
   TextEditingController user = TextEditingController();
   TextEditingController pass = TextEditingController();
 
+
   validarDatos() async {
     try {
       CollectionReference ref = FirebaseFirestore.instance.collection("User");
@@ -78,14 +79,18 @@ class LoginApp extends State<Login> {
             Padding(
               padding: EdgeInsets.all(10),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(minimumSize: Size(500, 50)),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(500, 50),
+                  primary: Colors.black45,
+                ),
                 onPressed: () {
                   validarDatos();
 
                   pass.clear();
                   //mensaje('Este es un título', 'Este es un mensaje');
                 },
-                child: Text('Ingresar',style: TextStyle(color: Colors.white,fontSize: 20)),
+                child: Text('Ingresar',
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
               ),
             ),
           ],

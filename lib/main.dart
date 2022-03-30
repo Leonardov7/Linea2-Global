@@ -65,7 +65,6 @@ class HomeStart extends State<Home> {
           )
       ),
         body:
-
         SingleChildScrollView(
           child: Column(
             children: [

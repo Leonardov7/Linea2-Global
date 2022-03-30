@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -107,12 +108,11 @@ class LoginApp extends State<Login> {
                   minimumSize: Size(50, 50),
                   primary: Colors.black45,
                 ),
-                onPressed: () {
+                onPressed: () async{
+                  print("dentro");
+                  bool isSuccess= await biometrico();
 
-                    print("dentro");
-                    biometrico();
-
-
+                  print('success '+isSuccess.toString());
                 },
                 child: Icon(Icons.fingerprint, size: 80),
               ),
@@ -143,37 +143,50 @@ class LoginApp extends State<Login> {
         });
   }
 
-  Future<void> biometrico() async {
+  Future<bool> biometrico() async {
     print("biométrico");
+
     bool flag = true;
+    bool authenticated = false;
     if (flag) {
-      bool authenticated = false;
+
       const androidString = const AndroidAuthMessages(
         cancelButton: "Cancelar",
         goToSettingsButton: "Ajustes",
         signInTitle: "Ingrese",
         goToSettingsDescription: "Confirme su huella",
+
         biometricHint: "Toque el sensor",
         biometricNotRecognized: "Huella no reconocida",
         biometricRequiredTitle: "Required Title",
         biometricSuccess: "Huella reconocida",
-
       );
+      bool canCheckBiometrics = await auth.canCheckBiometrics;
+      bool isBiometricSupported = await auth.isDeviceSupported();
+      List<BiometricType> availableBiometrics =
+          await auth.getAvailableBiometrics();
+      print(canCheckBiometrics); //Returns trueB
+      print("support -->" + isBiometricSupported.toString());
+      print(
+          availableBiometrics.toString()); //Returns [BiometricType.fingerprint]
       try {
-        authenticated = await auth.authenticateWithBiometrics  (
+        authenticated = await auth.authenticate(
             localizedReason: "Autentíquese para acceder",
             useErrorDialogs: true,
             stickyAuth: true,
+            biometricOnly: true,
             androidAuthStrings: androidString);
         if (!authenticated) {
-          exit(0);
+         authenticated=false;
         }
-      } catch (e) {
+      } on PlatformException catch (e) {
         print(e);
       }
-      if (!mounted) {
+     /* if (!mounted) {
         return;
-      }
+      }*/
+
     }
+    return authenticated;
   }
 }

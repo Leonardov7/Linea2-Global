@@ -36,7 +36,7 @@ class UserRegisterApp extends State<UserRegister> {
       });
     }
     catch (e){
-      print(e);
+      print('ERROR--> '+e.toString());
     }
   }
 
@@ -90,6 +90,7 @@ class UserRegisterApp extends State<UserRegister> {
             Padding(
               padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
+                controller: nombreUser,
                 autofocus: true,
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
@@ -105,7 +106,7 @@ class UserRegisterApp extends State<UserRegister> {
             Padding(
               padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
-                //controller: user,
+                controller: identity,
                 style: TextStyle(color: Colors.blueGrey),
                 decoration: InputDecoration(
                   fillColor: Colors.green,
@@ -119,6 +120,7 @@ class UserRegisterApp extends State<UserRegister> {
             Padding(
               padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
+                controller: correo,
                 keyboardType: TextInputType.emailAddress,
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
@@ -134,6 +136,7 @@ class UserRegisterApp extends State<UserRegister> {
             Padding(
               padding: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: TextField(
+                controller: tele,
                 keyboardType: TextInputType.number,
                 //controller: user,
                 style: TextStyle(color: Colors.blueGrey),
@@ -201,6 +204,7 @@ class UserRegisterApp extends State<UserRegister> {
                 alignment: const Alignment(1.0, 1.0),
                 children: [
                   TextField(
+                    controller: pass,
                     keyboardType: TextInputType.multiline,
                     obscureText: passHide,
                     //controller: user,

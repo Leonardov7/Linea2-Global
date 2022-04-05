@@ -38,9 +38,9 @@ class LoginApp extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
+    /*setState(() {
       biometrico();
-    });
+    });*/
     return Scaffold(
       appBar: AppBar(
         title: Text('Login'),
@@ -144,7 +144,7 @@ class LoginApp extends State<Login> {
   }
 
   Future<bool> biometrico() async {
-    print("biométrico");
+    //print("biométrico");
 
     bool flag = true;
     bool authenticated = false;

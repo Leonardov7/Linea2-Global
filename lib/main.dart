@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'View/Login.dart';
 import 'View/UserRegister.dart';
+import 'View/REST.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -101,6 +102,7 @@ class HomeStart extends State<Home> {
 
                   style: ElevatedButton.styleFrom(
                       primary: Colors.black45,
+
                       minimumSize: Size(400, 50)),
                   onPressed: () {
                     print('Registrar Usuario');
@@ -108,6 +110,23 @@ class HomeStart extends State<Home> {
                         MaterialPageRoute(builder: (_) => UserRegister()));
                   },
                   child: Text('Registrar Usuario',style: TextStyle(color: Colors.white,fontSize: 20)),
+                ),
+              ),
+              Padding(
+                padding:
+                EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 0),
+                child: ElevatedButton(
+
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black45,
+
+                      minimumSize: Size(400, 50)),
+                  onPressed: () {
+                    print('Registrar Usuario');
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => REST()));
+                  },
+                  child: Text('Consumir servicio',style: TextStyle(color: Colors.white,fontSize: 20)),
                 ),
               ),
             ],

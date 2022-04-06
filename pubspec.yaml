@@ -33,6 +33,7 @@ dependencies:
   cloud_firestore:
   local_auth: ^1.1.11
   http:
+  geolocator: ^8.2.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -18,12 +18,16 @@ class RESTApp extends State<REST> {
     Response response =
         await get(Uri.parse('https://jsonplaceholder.typicode.com/users/'+id));
     Map data = jsonDecode(response.body);
-    print('NAME: ${data['name']} /// username: ${data['username']}');
-    print(data);
+    //print('NAME: ${data['name']} /// username: ${data['username']}');
+   // print(data);
     print(response.statusCode.toString()+ " Código de respuesta");
-    nombre.text='${data['name']}';
-    correo.text='${data['email']}';
-    username.text='${data['username']}';
+    if (response.statusCode.toString()=='200'){
+      nombre.text='${data['name']}';
+      correo.text='${data['email']}';
+      username.text='${data['username']}';
+
+    }
+
   }
 consumirPost()async{
   Response response = await post(Uri.parse('https://jsonplaceholder.typicode.com/posts'),
@@ -40,6 +44,7 @@ consumirPost()async{
     return Scaffold(
       appBar: AppBar(
         title: Text('Consumir servicio'),
+        backgroundColor: Colors.black45,
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -61,15 +66,24 @@ consumirPost()async{
               Padding(
                 padding: EdgeInsets.all(10),
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(500, 50),
+                    primary: Colors.black45,
+                  ),
                   onPressed: () {
                     consumirGet(id.text);
                   },
                   child: Text('GET'),
+
                 ),
               ),
               Padding(
                 padding: EdgeInsets.all(10),
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(500, 50),
+                    primary: Colors.black45,
+                  ),
                   onPressed: () {
                     consumirPost();
                   },

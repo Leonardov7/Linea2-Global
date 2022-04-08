@@ -20,6 +20,7 @@ class UserRegisterApp extends State<UserRegister> {
   TextEditingController tele=TextEditingController();
   var _currentSelectedDate;
   final firebase=FirebaseFirestore.instance;
+
   inserDatatUser() async{
     try{
       await firebase
@@ -35,7 +36,7 @@ class UserRegisterApp extends State<UserRegister> {
         "Estado":true,
         "Rol":"Usuario"
       });
-      mensaje("Ingreso", "Usuario registrado correctamente");
+     mensaje("Ingreso", "Usuario registrado correctamente");
     }
     catch (e){
       print('ERROR--> '+e.toString());

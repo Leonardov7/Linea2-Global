@@ -20,6 +20,7 @@ class LoginApp extends State<Login> {
   String idUser='';
 
   validarDatos() async {
+    bool flag = false;
     try {
       CollectionReference ref = FirebaseFirestore.instance.collection("User");
       print('***----1');
@@ -32,6 +33,7 @@ class LoginApp extends State<Login> {
             print('***----3');
             if (pass.text == cursor.get('Password')) {
               idUser= cursor.id.toString();
+              flag=true;
               mensaje('Mensaje', 'dato encontrado',idUser);
 
               print(cursor.id);
@@ -39,6 +41,8 @@ class LoginApp extends State<Login> {
           }
           //print(cursor.get('User'));
         }
+        if (!flag)
+          mensajeGeneral('Mensaje', 'dato no encontrado');
       }
     } catch (e) {
       mensajeGeneral('Error', e.toString());

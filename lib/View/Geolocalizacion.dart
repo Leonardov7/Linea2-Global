@@ -79,6 +79,12 @@ class GeolocalizacionApp extends State<Geolocalizacion> {
       appBar: AppBar(
         title: Text('Bienvenido ' + nombreUser),
         backgroundColor: Colors.black45,
+        actions: [
+          FloatingActionButton(onPressed: (){},
+            child: const Icon(Icons.quiz_outlined),
+
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(

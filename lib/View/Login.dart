@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:proyectolinea2/View/Geolocalizacion.dart';
 
 class Login extends StatefulWidget {
   //cambia dinámicamente
@@ -16,23 +17,31 @@ class LoginApp extends State<Login> {
   TextEditingController user = TextEditingController();
   TextEditingController pass = TextEditingController();
   final LocalAuthentication auth = LocalAuthentication();
+  String idUser='';
 
   validarDatos() async {
     try {
       CollectionReference ref = FirebaseFirestore.instance.collection("User");
+      print('***----1');
       QuerySnapshot usuario = await ref.get();
       if (usuario.docs.length != 0) {
+        print('***----2');
         for (var cursor in usuario.docs) {
-          if (user.text == cursor.get('User')) {
-            if (pass.text == cursor.get('Pass')) {
-              mensaje('Mensaje', 'dato encontrado');
+
+          if (user.text == cursor.get('Correo')) {
+            print('***----3');
+            if (pass.text == cursor.get('Password')) {
+              idUser= cursor.id.toString();
+              mensaje('Mensaje', 'dato encontrado',idUser);
+
+              print(cursor.id);
             }
           }
           //print(cursor.get('User'));
         }
       }
     } catch (e) {
-      mensaje('Error', e.toString());
+      mensajeGeneral('Error', e.toString());
     }
   }
 
@@ -67,8 +76,8 @@ class LoginApp extends State<Login> {
                   fillColor: Colors.green,
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  labelText: 'User',
-                  hintText: 'Digite el usuario',
+                  labelText: 'Correo',
+                  hintText: 'Digite su cooreo',
                 ),
               ),
             ),
@@ -94,7 +103,7 @@ class LoginApp extends State<Login> {
                 onPressed: () {
                   validarDatos();
 
-                  pass.clear();
+                  //pass.clear();
                   //mensaje('Este es un título', 'Este es un mensaje');
                 },
                 child: Text('Ingresar',
@@ -123,7 +132,29 @@ class LoginApp extends State<Login> {
     );
   }
 
-  void mensaje(String titulo, String mess) {
+  void mensaje(String titulo, String mess, String userId) {
+    showDialog(
+        context: context,
+        builder: (buildcontext) {
+          return AlertDialog(
+            title: Text(titulo),
+            content: Text(mess),
+            actions: <Widget>[
+              RaisedButton(
+                onPressed: () async {
+                  String idU=await userId;
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => Geolocalizacion(idU)));
+
+                },
+                child:
+                    Text("Aceptar", style: TextStyle(color: Colors.blueGrey)),
+              )
+            ],
+          );
+        });
+  }
+  void mensajeGeneral(String titulo, String mess) {
     showDialog(
         context: context,
         builder: (buildcontext) {
@@ -134,9 +165,10 @@ class LoginApp extends State<Login> {
               RaisedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+
                 },
                 child:
-                    Text("Aceptar", style: TextStyle(color: Colors.blueGrey)),
+                Text("Aceptar", style: TextStyle(color: Colors.blueGrey)),
               )
             ],
           );

@@ -1,9 +1,13 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:proyectolinea2/View/REST.dart';
 
 class Geolocalizacion extends StatefulWidget {
+  final String idUser;
+  Geolocalizacion(this.idUser);
   @override
   GeolocalizacionApp createState() => GeolocalizacionApp();
 }
@@ -14,61 +18,66 @@ class GeolocalizacionApp extends State<Geolocalizacion> {
   late Position position;
   String localizacion = '';
   TextEditingController local = TextEditingController();
+  double latitud = 0;
+  double longitud = 0;
+  String coordenadas = '';
+  String nombreUser = '';
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
-    //bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
-    print('************************1');
-    // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    print('************************2');
     if (serviceEnabled) {
-      print('************************3');
-      // location service is enabled,
     } else {
-      // open Location settings
-      print('************************4');
       await Geolocator.openLocationSettings();
     }
-
     if (!serviceEnabled) {
-      print('************************5');
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
       return Future.error('Location services are disabled.');
     }
-
     permission = await Geolocator.checkPermission();
-    print('************************6');
     if (permission == LocationPermission.denied) {
-      print('************************7');
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        print('************************8');
-
         return Future.error('Location permissions are denied');
       }
     }
-
     if (permission == LocationPermission.deniedForever) {
-      print('************************9');
-      // Permissions are denied forever, handle appropriately.
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-
-    print('************************10');
     print(await Geolocator.getCurrentPosition());
-      // local.text = await Geolocator.getCurrentPosition().toString();
+
     return await Geolocator.getCurrentPosition();
+  }
+
+  buscarUsuario() async {
+    try {
+      CollectionReference ref = FirebaseFirestore.instance.collection("User");
+      print('***----1----');
+      QuerySnapshot usuario = await ref.get();
+      if (usuario.docs.length != 0) {
+        print('***----2----');
+        for (var cursor in usuario.docs) {
+          if (widget.idUser == cursor.id) {
+            nombreUser = await cursor.get('NombreUsuario');
+            print('----------------00000  ' + nombreUser);
+          }
+        }
+      }
+    } catch (e) {
+      //mensajeGeneral('Error', e.toString());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+   /* setState(() async {
+      nombreUser=await widget.idUser;
+      buscarUsuario();
+    });*/
     return Scaffold(
       appBar: AppBar(
-        title: Text('Geolocalizacion'),
+        title: Text('Bienvenido ' + nombreUser),
         backgroundColor: Colors.black45,
       ),
       body: SingleChildScrollView(
@@ -113,7 +122,6 @@ class GeolocalizacionApp extends State<Geolocalizacion> {
                 color: Colors.blue[50],
                 onPressed: () async {
                   local.text = (await _determinePosition()).toString();
-
                 },
                 child: Text("Get Location"),
               ),
@@ -134,10 +142,18 @@ class GeolocalizacionApp extends State<Geolocalizacion> {
               RaisedButton(
                 color: Colors.blue[50],
                 onPressed: () async {
-                  local.text = (await _determinePosition()).toString();
-                  setState(() {
-
-                  });
+                  // String _coordenadas = (await _determinePosition()).toString();
+                  // print(await (_coordenadas) + "**********************");
+                  // coordenadas = _coordenadas
+                  //      .replaceAll("Latidude:", "")
+                  //    .replaceAll("Longitude:", "");
+                  // print(coordenadas);
+                  local.text = (await _determinePosition())
+                      .toString()
+                      .replaceAll("Latitude: ", "")
+                      .replaceAll("Longitude: ", "");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => REST (local.text)));
                 },
                 child: Text("Ver clima"),
               ),

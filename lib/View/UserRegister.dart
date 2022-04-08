@@ -32,8 +32,10 @@ class UserRegisterApp extends State<UserRegister> {
         "Telefono":tele.text,
         "FechaNacido":fecha.text,
         "Password":pass.text,
-        "Estado":true
+        "Estado":true,
+        "Rol":"Usuario"
       });
+      mensaje("Ingreso", "Usuario registrado correctamente");
     }
     catch (e){
       print('ERROR--> '+e.toString());
@@ -251,5 +253,24 @@ class UserRegisterApp extends State<UserRegister> {
         ),
       ),
     );
+  }
+  void mensaje(String titulo, String mess) {
+    showDialog(
+        context: context,
+        builder: (buildcontext) {
+          return AlertDialog(
+            title: Text(titulo),
+            content: Text(mess),
+            actions: <Widget>[
+              RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child:
+                Text("Aceptar", style: TextStyle(color: Colors.blueGrey)),
+              )
+            ],
+          );
+        });
   }
 }

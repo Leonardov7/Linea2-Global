@@ -125,7 +125,7 @@ class HomeStart extends State<Home> {
                   onPressed: () {
                     print('Registrar Usuario');
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => REST()));
+                        MaterialPageRoute(builder: (_) => REST('4.916,-74.096')));
                   },
                   child: Text('Consumir servicio',style: TextStyle(color: Colors.white,fontSize: 20)),
                 ),
@@ -142,7 +142,7 @@ class HomeStart extends State<Home> {
                   onPressed: () {
                     print('Geolocalización');
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => Geolocalizacion()));
+                        MaterialPageRoute(builder: (_) => Geolocalizacion('')));
                   },
                   child: Text('Geolocalización',style: TextStyle(color: Colors.white,fontSize: 20)),
                 ),

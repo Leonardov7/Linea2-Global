@@ -3,29 +3,41 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 class REST extends StatefulWidget {
+  final String location;
+  REST(this.location);
   @override
   RESTApp createState() => RESTApp();
 }
 
 class RESTApp extends State<REST> {
   TextEditingController id=TextEditingController();
-  TextEditingController nombre=TextEditingController();
-  TextEditingController correo=TextEditingController();
-  TextEditingController username=TextEditingController();
+  TextEditingController temperatura=TextEditingController();
+  TextEditingController altitud=TextEditingController();
+  TextEditingController humedad=TextEditingController();
   var dataHttp='';
 
   consumirGet(var id) async {
-    Response response =
-        await get(Uri.parse('https://jsonplaceholder.typicode.com/users/'+id));
-    Map data = jsonDecode(response.body);
-    //print('NAME: ${data['name']} /// username: ${data['username']}');
-   // print(data);
-    print(response.statusCode.toString()+ " Código de respuesta");
-    if (response.statusCode.toString()=='200'){
-      nombre.text='${data['name']}';
-      correo.text='${data['email']}';
-      username.text='${data['username']}';
+    print (widget.location);
+    try {
+      Response response =
+      //await get(Uri.parse('https://jsonplaceholder.typicode.com/users/' + id));
+      //http://api.weatherunlocked.com/api/current/4.917,%20-74.1?app_id=02546387&app_key=3ba0a43c2bc6266199961c600f7e5fa8
+      await get(Uri.parse('http://api.weatherunlocked.com/api/current/'+widget.location+'?app_id=02546387&app_key=3ba0a43c2bc6266199961c600f7e5fa8'));
+      Map data = jsonDecode(response.body);
+      //print('NAME: ${data['name']} /// username: ${data['username']}');
+      // print(data);
+      print(response.statusCode.toString() + " Código de respuesta");
+      if (response.statusCode.toString() == '200') {
+        temperatura.text = '${data['temp_c']} C°';
+        altitud.text='${data['alt_m']} mts';
+        humedad.text='${data['humid_pct']} %';
 
+        // correo.text='${data['email']}';
+        // username.text='${data['username']}';
+
+      }
+    }catch(e){
+      print(e);
     }
 
   }
@@ -94,13 +106,13 @@ consumirPost()async{
                 padding: EdgeInsets.all(10),
                 child: TextField(
                   enabled: false,
-                  controller: nombre,
+                  controller: temperatura,
                   decoration: InputDecoration(
                     fillColor: Colors.green,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    labelText: 'Nombre',
-                    hintText: 'Nombre',
+                    labelText: 'Temperatura',
+                    hintText: 'Temperatura',
                   ),
                 ),
               ),
@@ -108,13 +120,13 @@ consumirPost()async{
                 padding: EdgeInsets.all(10),
                 child: TextField(
                   enabled: false,
-                  controller: correo,
+                  controller: altitud,
                   decoration: InputDecoration(
                     fillColor: Colors.green,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    labelText: 'Correo',
-                    hintText: 'Correo',
+                    labelText: 'Altitud',
+                    hintText: 'Altitud',
                   ),
                 ),
               ),
@@ -122,13 +134,13 @@ consumirPost()async{
                 padding: EdgeInsets.all(10),
                 child: TextField(
                   enabled: false,
-                  controller: username,
+                  controller: humedad,
                   decoration: InputDecoration(
                     fillColor: Colors.green,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    labelText: 'UserName',
-                    hintText: 'UserName',
+                    labelText: 'Humedad',
+                    hintText: 'Humedad',
                   ),
                 ),
               ),
